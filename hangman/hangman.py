@@ -50,5 +50,5 @@ def hangman():
     else:
         print('Yay!, You won!! ', word, 'is the correct word.')
 
-
+print ('Welcome to hangman game!')
 hangman()
