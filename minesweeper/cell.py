@@ -4,11 +4,14 @@ import settings
 
 class Cell:
     all = []
+    cell_count = settings.CELLS_COUNT
+    cell_count_label_object = None
     def __init__(self, x, y , is_mine=False):
         self.is_mine = is_mine
         self.cell_btn_object = None
         self.x = x 
         self.y = y
+        self.is_opened = False
 
         # append cell objects to Cell.all list
         Cell.all.append(self)
@@ -23,12 +26,18 @@ class Cell:
         btn.bind('<Button-2>' , self.right_click_actions) # Right Click
         self.cell_btn_object = btn
 
-    def create_cell_count_label(self,location):
+    @staticmethod
+    def create_cell_count_label(location):
         lbl = Label(
             location,
-            text = f'Cells Left: {settings.CELLS_COUNT}'
+            text = f'Cells Left: {Cell.cell_count}',
+            width = 12,
+            height = 4,
+            bg = 'white',
+            fg = 'black',
+            font=('', 20)
         )
-        return lbl
+        Cell.cell_count_label_object = lbl
 
     def left_click_actions(self, event):
         if self.is_mine:
@@ -77,7 +86,16 @@ class Cell:
         self.cell_btn_object.configure( bg= 'red' , text='Mine')
     
     def show_cell(self):
-        self.cell_btn_object.configure(text = self.surrounded_cells_mines_length)
+        if not self.is_opened:
+            Cell.cell_count -= 1
+            self.cell_btn_object.configure(text = self.surrounded_cells_mines_length)
+            # replace the text of cell count label with newer count
+            if Cell.cell_count_label_object:
+                Cell.cell_count_label_object.configure(
+                    text = f'Cells Left: {Cell.cell_count}'
+                )
+        # Mark the cell as opened (use it as the last line of this method)
+        self.is_opened = True
 
     @staticmethod
     def randomize_mines():

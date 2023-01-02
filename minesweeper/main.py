@@ -3,14 +3,13 @@ from cell import Cell
 import settings
 import utils
 
-root = Tk() #start the panel shell
+root = Tk()
 
 # Override the settings of the window
 root.configure(bg="black")
 root.geometry(f'{settings.WIDTH}x{settings.HEIGHT}')
 root.title('Minesweeper Game')
 root.resizable(False,False)
-
 
 
 top_frame = Frame(
@@ -44,9 +43,18 @@ center_frame.place(
 # creating grid of cells
 for x in range(settings.GRID_SIZE):
     for y in range(settings.GRID_SIZE):
-        c = Cell()
+        c = Cell(x, y)
         c.create_btn_object(center_frame)
         c.cell_btn_object.grid(column = x , row=y)
+
+# call the label from cell class
+Cell.create_cell_count_label(left_frame)
+Cell.cell_count_label_object.place(
+    x=settings.WIDTH / 10,
+    y=settings.HEIGHT / 4)
+
+Cell.randomize_mines()
+
 
 # run the window
 root.mainloop() 
