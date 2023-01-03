@@ -11,12 +11,11 @@ root.geometry(f'{settings.WIDTH}x{settings.HEIGHT}')
 root.title('Minesweeper Game')
 root.resizable(False,False)
 
-
 top_frame = Frame(
     root,
     bg='black',
     width=f'{utils.width_prct(100)}', 
-    height=f'{utils.height_prct(25)}' 
+    height=f'{utils.height_prct(25)}'
 )
 top_frame.place(x=0,y=0)
 

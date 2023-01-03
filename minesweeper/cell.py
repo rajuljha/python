@@ -1,6 +1,7 @@
-from tkinter import Button,Label
+from tkinter import *
 import random
 import settings
+import sys
 
 class Cell:
     all = []
@@ -12,6 +13,7 @@ class Cell:
         self.x = x 
         self.y = y
         self.is_opened = False
+        self.is_mine_candidate = False
 
         # append cell objects to Cell.all list
         Cell.all.append(self)
@@ -39,6 +41,22 @@ class Cell:
         )
         Cell.cell_count_label_object = lbl
 
+    @staticmethod
+    def game_over_display():
+        game_over_root = Tk()
+        game_over_root.title("GAME OVER!!")
+        game_over_root.geometry(f'{settings.WIDTH}x{settings.HEIGHT}')
+        
+        game_over_label = Label(
+            game_over_root,
+            text = "GAME OVER!",
+            font = ("Helvetica",100)
+        )
+        game_over_label.pack(pady = 200)
+
+        game_over_root.after(3000, sys.exit())
+        game_over_root.mainloop()
+        
     def left_click_actions(self, event):
         if self.is_mine:
             self.show_mine()
@@ -49,8 +67,17 @@ class Cell:
             self.show_cell()
 
     def right_click_actions(self, event):
-        print(event)
-        print("I am right clicked!")
+        if not self.is_mine_candidate:
+            self.cell_btn_object.configure(
+                bg="yellow",
+                text = 'Marked!'
+            )
+            self.is_mine_candidate = True
+        else:
+            self.cell_btn_object.configure(
+                bg="SystemButtonFace",
+                text = ""
+            )
 
     def get_cell_by_axis(self, x, y):
         for cell in Cell.all:
@@ -82,9 +109,12 @@ class Cell:
         return counter
 
     def show_mine(self):
-        # Logic to interrupt the game and display message that player lost
         self.cell_btn_object.configure( bg= 'red' , text='Mine')
-    
+        # Logic to interrupt the game and display message that player lost
+        
+        Cell.game_over_display()
+
+        
     def show_cell(self):
         if not self.is_opened:
             Cell.cell_count -= 1
@@ -94,6 +124,9 @@ class Cell:
                 Cell.cell_count_label_object.configure(
                     text = f'Cells Left: {Cell.cell_count}'
                 )
+            # If this was a mine candidate then for safety we should configure
+            #the background color to SystemButtonface
+            self.cell_btn_object.configure(bg="SystemButtonFace")
         # Mark the cell as opened (use it as the last line of this method)
         self.is_opened = True
 
