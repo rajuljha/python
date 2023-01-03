@@ -42,14 +42,14 @@ class Cell:
         Cell.cell_count_label_object = lbl
 
     @staticmethod
-    def game_over_display():
+    def game_over_display(text_displayed):
         game_over_root = Tk()
         game_over_root.title("GAME OVER!!")
         game_over_root.geometry(f'{settings.WIDTH}x{settings.HEIGHT}')
         
         game_over_label = Label(
             game_over_root,
-            text = "GAME OVER!",
+            text = f"{text_displayed}",
             font = ("Helvetica",100)
         )
         game_over_label.pack(pady = 200)
@@ -65,6 +65,14 @@ class Cell:
                 for cell_obj in self.surrounded_cells:
                     cell_obj.show_cell()
             self.show_cell()
+
+            #if mines count is equal to cells count then player won
+            if Cell.cell_count == settings.RANDOM_COUNT :
+                Cell.game_over_display("YOU WON!")
+
+        # cancel left and right click events if cell is already opened
+        self.cell_btn_object.unbind('<Button-1>')
+        self.cell_btn_object.unbind('<Button-2>')
 
     def right_click_actions(self, event):
         if not self.is_mine_candidate:
@@ -112,7 +120,7 @@ class Cell:
         self.cell_btn_object.configure( bg= 'red' , text='Mine')
         # Logic to interrupt the game and display message that player lost
         
-        Cell.game_over_display()
+        Cell.game_over_display("GAME OVER!")
 
         
     def show_cell(self):
