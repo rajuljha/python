@@ -53,7 +53,7 @@ class Cell:
             Their are {settings.RANDOM_COUNT} mines amongst {settings.CELLS_COUNT} cells
     AVOID CLICKING ON THE MINES OR PERISH!
             """,
-            font = ('')
+            font = ('Jokerman')
         )
         Cell.rule_show_object = rules_label
     
