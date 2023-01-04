@@ -2,6 +2,7 @@ from tkinter import *
 import random
 import settings
 import sys
+import time
 
 class Cell:
     all = []
@@ -52,11 +53,17 @@ class Cell:
             text = f"{text_displayed}",
             font = ("Helvetica",100)
         )
+        b1 = Button(
+            game_over_root,
+            text = "Close",
+            font= ("Helvetica",100),
+            command = game_over_root.destroy
+        )
         game_over_label.pack(pady = 200)
+        b1.pack(pady=50)
 
-        game_over_root.after(3000, sys.exit())
         game_over_root.mainloop()
-        
+
     def left_click_actions(self, event):
         if self.is_mine:
             self.show_mine()
@@ -118,10 +125,11 @@ class Cell:
 
     def show_mine(self):
         self.cell_btn_object.configure( bg= 'red' , text='Mine')
-        # Logic to interrupt the game and display message that player lost
         
+        # Logic to interrupt the game and display message that player lost
         Cell.game_over_display("GAME OVER!")
-
+        time.sleep(3)
+        sys.exit()
         
     def show_cell(self):
         if not self.is_opened:
