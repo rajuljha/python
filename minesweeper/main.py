@@ -64,6 +64,12 @@ Cell.cell_count_label_object.place(
     x=settings.WIDTH / 10,
     y=settings.HEIGHT / 4)
 
+Cell.create_rule_show(left_frame)
+Cell.rule_show_object.place(
+    x = 25,
+    y = 25
+)
+
 Cell.randomize_mines()
 
 

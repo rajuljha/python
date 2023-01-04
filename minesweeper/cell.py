@@ -3,11 +3,13 @@ import random
 import settings
 import sys
 import time
+import utils
 
 class Cell:
     all = []
     cell_count = settings.CELLS_COUNT
     cell_count_label_object = None
+    rule_show_object = None
     def __init__(self, x, y , is_mine=False):
         self.is_mine = is_mine
         self.cell_btn_object = None
@@ -42,6 +44,19 @@ class Cell:
         )
         Cell.cell_count_label_object = lbl
 
+    @staticmethod
+    def create_rule_show(location):
+        rules_label = Label(
+            location,
+            bg="cyan",
+            text=f""" !!! Play the minesweeper game !!!
+            Their are {settings.RANDOM_COUNT} mines amongst {settings.CELLS_COUNT} cells
+    AVOID CLICKING ON THE MINES OR PERISH!
+            """,
+            font = ('')
+        )
+        Cell.rule_show_object = rules_label
+    
     @staticmethod
     def game_over_display(text_displayed):
         game_over_root = Tk()
