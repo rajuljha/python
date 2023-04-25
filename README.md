@@ -9,8 +9,7 @@ Fork this repository and clone it using:
 `git clone https://github.com/rajuljha/python.git`
  
 ### Step 3:
-Navigate to game folder and run the main file by:
-`python3 main.py`
+Navigate to game folder and run the main file
 
 
 
