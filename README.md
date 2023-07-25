@@ -60,7 +60,7 @@ Navigate to game folder and run the main file
 git branch <branch_name>
 3. Post development, add the changes and commit with a proper commit message
 - `git add .`
-- `git commit -m "<cimmit_message>"`
+- `git commit -m "<commit_message>"`
 4. Push the changes to your local repository:
 `git push origin <branch_name>`
 5. Raise a PR and explain the changes in the description
